@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --background: 220 20% 98%;
+    --foreground: 220 15% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 20%;
+
+    --primary: 220 90% 55%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 20%;
+
+    --muted: 220 10% 96%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 220 90% 55%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 10% 90%;
+    --input: 220 10% 90%;
+    --ring: 220 90% 55%;
+
+    --radius: 0.75rem;
+
+    --chart-1: 220;
+    --chart-2: 210;
+    --chart-3: 160;
+    --chart-4: 33;
+    --chart-5: 0;
+
+    --status-pending: 45 93% 47%;
+    --status-confirmed: 220 90% 55%;
+    --status-completed: 142 71% 45%;
+    --status-cancelled: 0 72% 51%;
+    --status-new: 190 84% 60%;
+    --status-contacted: 240 50% 60%;
+    --status-rejected: 340 84% 60%;
+    --status-in-progress: 220 84% 60%;
+    --status-resolved: 160 84% 40%;
+  }
+
+  .dark {
+    --background: 220 15% 10%;
+    --foreground: 220 10% 95%;
+
+    --card: 220 15% 12%;
+    --card-foreground: 220 10% 95%;
+
+    --popover: 220 15% 10%;
+    --popover-foreground: 220 10% 95%;
+
+    --primary: 220 90% 65%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 220 10% 95%;
+
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 65%;
+
+    --accent: 220 90% 65%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 63% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 220 90% 65%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
