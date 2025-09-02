@@ -85,8 +85,6 @@ npm run dev
 
 ## 🔐 Authentication
 
-- **Username**: `admin`
-- **Password**: `admin123` (default from your backend)
 - Uses JWT tokens for secure API access
 - Automatic token refresh and logout on expiry
 

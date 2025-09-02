@@ -15,10 +15,6 @@ The dashboard is fully integrated with your drvyn-backend MongoDB API and ready 
 2. **Open in Browser:**
    - Go to: `http://localhost:3001`
 
-3. **Login:**
-   - Username: `admin`
-   - Password: `admin123`
-
 ### **What's Available:**
 
 ✅ **Dashboard Overview** - Shows statistics and charts  

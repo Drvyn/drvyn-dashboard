@@ -28,28 +28,21 @@ interface DataTableProps {
 }
 
 export default function InsuranceDataTable({ data: initialData }: DataTableProps) {
-  // Get initial data from localStorage or use initialData prop
-  const [data, setData] = React.useState<InsuranceRequest[]>(() => {
-    if (typeof window !== 'undefined') {
-      const savedData = localStorage.getItem("insuranceRequestsData");
-      if (savedData) {
-        return JSON.parse(savedData);
-      }
-    }
-    return initialData;
-  });
+  // Use the initialData prop directly and remove the localStorage logic
+  const [data, setData] = React.useState<InsuranceRequest[]>(initialData);
 
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<InsuranceStatus | "all">("all");
   
   const columns = insuranceRequestColumns;
 
-  // Use useEffect to save data to localStorage whenever it changes
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("insuranceRequestsData", JSON.stringify(data));
-    }
-  }, [data]);
+  // THE useEffect HOOK THAT SAVES TO localStorage
+  // The following block of code has been deleted:
+  // React.useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     localStorage.setItem("insuranceRequestsData", JSON.stringify(data));
+  //   }
+  // }, [data]);
 
   const filteredData = React.useMemo(() => {
     let filtered = data;
@@ -113,13 +106,13 @@ export default function InsuranceDataTable({ data: initialData }: DataTableProps
         />
         <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as any)}>
             <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by status" />
+              <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                {insuranceStatuses.map(status => (
-                    <SelectItem key={status} value={status} className="capitalize">{status}</SelectItem>
-                ))}
+              <SelectItem value="all">All Statuses</SelectItem>
+              {insuranceStatuses.map(status => (
+                <SelectItem key={status} value={status} className="capitalize">{status}</SelectItem>
+              ))}
             </SelectContent>
         </Select>
       </div>
