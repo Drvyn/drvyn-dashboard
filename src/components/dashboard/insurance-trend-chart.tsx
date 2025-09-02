@@ -2,7 +2,7 @@
 
 import { Line, LineChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { type InsuranceRequest } from "@/lib/types";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 
 interface InsuranceTrendChartProps {
   data: InsuranceRequest[];

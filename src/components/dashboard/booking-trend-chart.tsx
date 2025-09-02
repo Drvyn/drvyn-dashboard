@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { type Booking } from "@/lib/types";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 
 interface BookingTrendChartProps {
   data: Booking[];

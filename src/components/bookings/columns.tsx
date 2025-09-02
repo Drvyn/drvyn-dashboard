@@ -5,7 +5,6 @@ import { Booking, BookingStatus } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChevronDown } from "lucide-react"
 
 const statusStyles: Record<BookingStatus, string> = {
   pending: "bg-amber-100 text-amber-800 border-amber-200 hover:bg-amber-200",
@@ -55,7 +54,7 @@ export const bookingsColumns: ColumnDef<Booking>[] = [
   },
   {
     accessorKey: "date",
-    header: "Booking Date & Time  ",
+    header: "Booking Date & Time",
     cell: ({ row }) => {
       const booking = row.original;
       return (
@@ -73,6 +72,37 @@ export const bookingsColumns: ColumnDef<Booking>[] = [
       return (
         <div className="font-medium">
           {row.original.serviceCenter}
+        </div>
+      )
+    }
+  },
+  // NEW: Add phone number column
+  {
+    accessorKey: "phone",
+    header: "Phone Number",
+    cell: ({ row }) => {
+      const booking = row.original;
+      return (
+        <div className="space-y-1">
+          <div className="font-medium">{booking.phone}</div>
+          {booking.alternatePhone && (
+            <div className="text-sm text-muted-foreground">
+              Alt: {booking.alternatePhone}
+            </div>
+          )}
+        </div>
+      )
+    }
+  },
+  // NEW: Add address column
+  {
+    accessorKey: "address",
+    header: "Address",
+    cell: ({ row }) => {
+      const booking = row.original;
+      return (
+        <div className="max-w-[200px]">
+          <div className="text-sm">{booking.address}</div>
         </div>
       )
     }
