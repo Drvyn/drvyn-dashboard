@@ -12,7 +12,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'Drvyn Dashboard',
-  description: 'A modern CRM/Dashboard for car services.',
+  description: 'A modern CRM/Dashboard for DRVYN.IN.',
 };
 
 export default function RootLayout({

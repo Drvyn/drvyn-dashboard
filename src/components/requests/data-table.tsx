@@ -28,28 +28,13 @@ interface DataTableProps {
 }
 
 export default function RequestsDataTable({ data: initialData }: DataTableProps) {
-  // Get initial data from localStorage or use initialData prop
-  const [data, setData] = React.useState<GeneralRequest[]>(() => {
-    if (typeof window !== 'undefined') {
-      const savedData = localStorage.getItem("generalRequestsData");
-      if (savedData) {
-        return JSON.parse(savedData);
-      }
-    }
-    return initialData;
-  });
+  // Use the initialData prop directly and remove the localStorage logic
+  const [data, setData] = React.useState<GeneralRequest[]>(initialData);
 
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<GeneralRequestStatus | "all">("all");
   
   const columns = generalRequestColumns;
-
-  // Use useEffect to save data to localStorage whenever it changes
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("generalRequestsData", JSON.stringify(data));
-    }
-  }, [data]);
 
   const filteredData = React.useMemo(() => {
     let filtered = data;
