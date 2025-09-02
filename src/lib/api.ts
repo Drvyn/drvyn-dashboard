@@ -56,9 +56,10 @@ async function apiRequest<T>(
     
     console.log(`📡 API Request: ${options.method || 'GET'} ${url}`);
     
-    const headers: HeadersInit = {
+    // Define a more specific type for headers
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     };
 
     if (token) {
