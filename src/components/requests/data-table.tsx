@@ -28,21 +28,38 @@ interface DataTableProps {
 }
 
 export default function RequestsDataTable({ data: initialData }: DataTableProps) {
-  const [data, setData] = React.useState(initialData);
+  // Get initial data from localStorage or use initialData prop
+  const [data, setData] = React.useState<GeneralRequest[]>(() => {
+    if (typeof window !== 'undefined') {
+      const savedData = localStorage.getItem("generalRequestsData");
+      if (savedData) {
+        return JSON.parse(savedData);
+      }
+    }
+    return initialData;
+  });
+
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<GeneralRequestStatus | "all">("all");
   
   const columns = generalRequestColumns;
 
+  // Use useEffect to save data to localStorage whenever it changes
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("generalRequestsData", JSON.stringify(data));
+    }
+  }, [data]);
+
   const filteredData = React.useMemo(() => {
     let filtered = data;
 
     if (statusFilter !== "all") {
-      filtered = filtered.filter((item) => item.status === statusFilter);
+      filtered = filtered.filter((item: GeneralRequest) => item.status === statusFilter);
     }
 
     if (globalFilter) {
-      filtered = filtered.filter((item) =>
+      filtered = filtered.filter((item: GeneralRequest) =>
         item.brand.toLowerCase().includes(globalFilter.toLowerCase()) ||
         item.model.toLowerCase().includes(globalFilter.toLowerCase()) ||
         item.year.toLowerCase().includes(globalFilter.toLowerCase())
@@ -65,7 +82,7 @@ export default function RequestsDataTable({ data: initialData }: DataTableProps)
     onGlobalFilterChange: setGlobalFilter,
     meta: {
       updateData: (rowIndex: number, columnId: string, value: any) => {
-        setData(old => old.map((row, index) => {
+        setData((old: GeneralRequest[]) => old.map((row: GeneralRequest, index: number) => {
           if (index === rowIndex) {
             return {
               ...old[rowIndex],
