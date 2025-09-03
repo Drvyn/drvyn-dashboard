@@ -76,7 +76,7 @@ export const bookingsColumns: ColumnDef<Booking>[] = [
       )
     }
   },
-  // NEW: Add phone number column
+ 
   {
     accessorKey: "phone",
     header: "Phone Number",
@@ -94,7 +94,7 @@ export const bookingsColumns: ColumnDef<Booking>[] = [
       )
     }
   },
-  // NEW: Add address column
+  
   {
     accessorKey: "address",
     header: "Address",

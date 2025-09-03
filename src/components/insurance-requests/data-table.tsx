@@ -1,3 +1,4 @@
+// InsuranceDataTable.tsx
 "use client";
 
 import * as React from "react";
@@ -27,22 +28,64 @@ interface DataTableProps {
   data: InsuranceRequest[];
 }
 
-export default function InsuranceDataTable({ data: initialData }: DataTableProps) {
-  // Use the initialData prop directly and remove the localStorage logic
-  const [data, setData] = React.useState<InsuranceRequest[]>(initialData);
+// Helper functions for localStorage status management
+const getStatusFromStorage = (): Record<string, InsuranceStatus> => {
+  if (typeof window === 'undefined') return {};
+  try {
+    const statusData = localStorage.getItem("insuranceRequestStatuses");
+    return statusData ? JSON.parse(statusData) : {};
+  } catch {
+    return {};
+  }
+};
 
+const saveStatusToStorage = (id: string, status: InsuranceStatus) => {
+  if (typeof window === 'undefined') return;
+  try {
+    const currentStatuses = getStatusFromStorage();
+    const updatedStatuses = { ...currentStatuses, [id]: status };
+    localStorage.setItem("insuranceRequestStatuses", JSON.stringify(updatedStatuses));
+  } catch (error) {
+    console.error("Failed to save status to localStorage:", error);
+  }
+};
+
+export default function InsuranceDataTable({ data: initialData }: DataTableProps) {
+  const [data, setData] = React.useState<InsuranceRequest[]>([]);
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<InsuranceStatus | "all">("all");
+  const [isLoading, setIsLoading] = React.useState(true);
   
   const columns = insuranceRequestColumns;
 
-  // THE useEffect HOOK THAT SAVES TO localStorage
-  // The following block of code has been deleted:
-  // React.useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     localStorage.setItem("insuranceRequestsData", JSON.stringify(data));
-  //   }
-  // }, [data]);
+  // Load data and apply saved statuses from localStorage
+  React.useEffect(() => {
+    const initializeData = () => {
+      try {
+        setIsLoading(true);
+        
+        // Get saved statuses from localStorage
+        const savedStatuses = getStatusFromStorage();
+        
+        // Apply saved statuses to the initial data
+        const enhancedData = initialData.map(item => {
+          if (item._id && savedStatuses[item._id]) {
+            return { ...item, status: savedStatuses[item._id] };
+          }
+          return item;
+        });
+        
+        setData(enhancedData);
+      } catch (error) {
+        console.error('Error initializing insurance requests:', error);
+        setData(initialData);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeData();
+  }, [initialData]);
 
   const filteredData = React.useMemo(() => {
     let filtered = data;
@@ -60,8 +103,30 @@ export default function InsuranceDataTable({ data: initialData }: DataTableProps
     }
     
     return filtered;
-
   }, [data, globalFilter, statusFilter]);
+
+  const updateData = React.useCallback((rowIndex: number, columnId: string, value: any) => {
+    setData((old: InsuranceRequest[]) => {
+      const newData = old.map((row: InsuranceRequest, index: number) => {
+        if (index === rowIndex) {
+          const updatedRow = {
+            ...old[rowIndex],
+            [columnId]: value,
+          };
+          
+          // Save only the status to localStorage if it's a status change
+          if (columnId === 'status' && updatedRow._id) {
+            saveStatusToStorage(updatedRow._id, value);
+          }
+          
+          return updatedRow;
+        }
+        return row;
+      });
+      
+      return newData;
+    });
+  }, []);
 
   const table = useReactTable({
     data: filteredData,
@@ -74,17 +139,7 @@ export default function InsuranceDataTable({ data: initialData }: DataTableProps
     },
     onGlobalFilterChange: setGlobalFilter,
     meta: {
-      updateData: (rowIndex: number, columnId: string, value: any) => {
-        setData((old: InsuranceRequest[]) => old.map((row: InsuranceRequest, index: number) => {
-          if (index === rowIndex) {
-            return {
-              ...old[rowIndex],
-              [columnId]: value,
-            }
-          }
-          return row;
-        }));
-      }
+      updateData,
     },
     initialState: {
         pagination: {
@@ -94,6 +149,10 @@ export default function InsuranceDataTable({ data: initialData }: DataTableProps
   });
 
   const insuranceStatuses: InsuranceStatus[] = ["new", "contacted", "completed", "rejected"];
+
+  if (isLoading) {
+    return <div className="p-4">Loading insurance requests...</div>;
+  }
 
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
