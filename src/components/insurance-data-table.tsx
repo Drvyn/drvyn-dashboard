@@ -105,7 +105,7 @@ export default function InsuranceDataTable({ initialData }: DataTableProps) {
     }
   });
 
-  const insuranceStatuses: InsuranceStatus[] = ["new", "contacted", "completed", "rejected"];
+  const insuranceStatuses: InsuranceStatus[] = ["new", "contacted", "completed", "rejected", "not-interested", "to-follow-up", "cold-enq", "booking-confirmed"];
 
   if (isLoading) {
     return <div className="flex justify-center items-center h-64">Loading insurance requests...</div>;

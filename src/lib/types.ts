@@ -1,6 +1,6 @@
-export type BookingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled';
-export type InsuranceStatus = 'new' | 'contacted' | 'completed' | 'rejected';
-export type GeneralRequestStatus = 'new' | 'in-progress' | 'resolved';
+export type BookingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled' | 'not-interested' | 'to-follow-up' | 'cold-enq' | 'booking-confirmed';
+export type InsuranceStatus = 'new' | 'contacted' | 'completed' | 'rejected' | 'not-interested' | 'to-follow-up' | 'cold-enq' | 'booking-confirmed';
+export type GeneralRequestStatus = 'new' | 'in-progress' | 'resolved' | 'not-interested' | 'to-follow-up' | 'cold-enq' | 'booking-confirmed';
 
 export interface CartItem {
   packageName: string;

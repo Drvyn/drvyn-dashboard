@@ -15,6 +15,10 @@ const bookingStatusColors: Record<BookingStatus, string> = {
   confirmed: "hsl(var(--status-confirmed))",
   completed: "hsl(var(--status-completed))",
   cancelled: "hsl(var(--status-cancelled))",
+  "not-interested": "hsl(var(--status-not-interested))",
+  "to-follow-up": "hsl(var(--status-to-follow-up))",
+  "cold-enq": "hsl(var(--status-cold-enq))",
+  "booking-confirmed": "hsl(var(--status-booking-confirmed))",
 };
 
 const insuranceStatusColors: Record<InsuranceStatus, string> = {
@@ -22,12 +26,20 @@ const insuranceStatusColors: Record<InsuranceStatus, string> = {
   contacted: "hsl(var(--status-contacted))",
   completed: "hsl(var(--status-completed))",
   rejected: "hsl(var(--status-rejected))",
+  "not-interested": "hsl(var(--status-not-interested))",
+  "to-follow-up": "hsl(var(--status-to-follow-up))",
+  "cold-enq": "hsl(var(--status-cold-enq))",
+  "booking-confirmed": "hsl(var(--status-booking-confirmed))",
 };
 
 const generalRequestStatusColors: Record<GeneralRequestStatus, string> = {
   new: "hsl(var(--status-new))",
   "in-progress": "hsl(var(--status-in-progress))",
   resolved: "hsl(var(--status-resolved))",
+  "not-interested": "hsl(var(--status-not-interested))",
+  "to-follow-up": "hsl(var(--status-to-follow-up))",
+  "cold-enq": "hsl(var(--status-cold-enq))",
+  "booking-confirmed": "hsl(var(--status-booking-confirmed))",
 };
 
 const CustomTooltip = ({ active, payload }: any) => {

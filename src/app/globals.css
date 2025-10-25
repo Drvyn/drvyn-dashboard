@@ -48,6 +48,10 @@
     --status-rejected: 340 84% 60%;
     --status-in-progress: 220 84% 60%;
     --status-resolved: 160 84% 40%;
+    --status-not-interested: 220 10% 65%;
+    --status-to-follow-up: 250 80% 60%; 
+    --status-cold-enq: 35 90% 60%;
+    --status-booking-confirmed: 220 90% 55%;
   }
 
   .dark {

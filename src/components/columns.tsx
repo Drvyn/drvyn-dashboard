@@ -13,9 +13,13 @@ const bookingStatusStyles: Record<BookingStatus, string> = {
   confirmed: "bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200",
   completed: "bg-green-100 text-green-800 border-green-200 hover:bg-green-200",
   cancelled: "bg-red-100 text-red-800 border-red-200 hover:bg-red-200",
+  "not-interested": "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200",
+  "to-follow-up": "bg-purple-100 text-purple-800 border-purple-200 hover:bg-purple-200",
+  "cold-enq": "bg-orange-100 text-orange-800 border-orange-200 hover:bg-orange-200",
+  "booking-confirmed": "bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200", // Same as confirmed
 };
 
-const bookingStatuses: BookingStatus[] = ["pending", "confirmed", "completed", "cancelled"];
+const bookingStatuses: BookingStatus[] = ["pending", "confirmed", "completed", "cancelled", "not-interested", "to-follow-up", "cold-enq", "booking-confirmed"];
 
 export const bookingsColumns: ColumnDef<Booking>[] = [
   {
@@ -142,9 +146,13 @@ const insuranceStatusStyles: Record<InsuranceStatus, string> = {
   contacted: "bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200",
   completed: "bg-green-100 text-green-800 border-green-200 hover:bg-green-200",
   rejected: "bg-red-100 text-red-800 border-red-200 hover:bg-red-200",
+  "not-interested": "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200",
+  "to-follow-up": "bg-purple-100 text-purple-800 border-purple-200 hover:bg-purple-200",
+  "cold-enq": "bg-orange-100 text-orange-800 border-orange-200 hover:bg-orange-200",
+  "booking-confirmed": "bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200",
 };
 
-const insuranceStatuses: InsuranceStatus[] = ["new", "contacted", "completed", "rejected"];
+const insuranceStatuses: InsuranceStatus[] = ["new", "contacted", "completed", "rejected", "not-interested", "to-follow-up", "cold-enq", "booking-confirmed"];
 
 export const insuranceRequestColumns: ColumnDef<InsuranceRequest>[] = [
   {
@@ -236,9 +244,13 @@ const generalRequestStatusStyles: Record<GeneralRequestStatus, string> = {
   new: "bg-amber-100 text-amber-800 border-amber-200 hover:bg-amber-200",
   "in-progress": "bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200",
   resolved: "bg-green-100 text-green-800 border-green-200 hover:bg-green-200",
+  "not-interested": "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200",
+  "to-follow-up": "bg-purple-100 text-purple-800 border-purple-200 hover:bg-purple-200",
+  "cold-enq": "bg-orange-100 text-orange-800 border-orange-200 hover:bg-orange-200",
+  "booking-confirmed": "bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200",
 };
 
-const generalRequestStatuses: GeneralRequestStatus[] = ["new", "in-progress", "resolved"];
+const generalRequestStatuses: GeneralRequestStatus[] = ["new", "in-progress", "resolved", "not-interested", "to-follow-up", "cold-enq", "booking-confirmed"];
 
 export const generalRequestColumns: ColumnDef<GeneralRequest>[] = [
   {

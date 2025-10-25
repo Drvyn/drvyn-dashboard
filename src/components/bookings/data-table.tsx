@@ -143,7 +143,17 @@ export default function BookingsDataTable({ data: initialData }: DataTableProps)
     }
   });
 
-  const bookingStatuses: BookingStatus[] = ["pending", "confirmed", "completed", "cancelled"];
+  const bookingStatuses: BookingStatus[] = ["pending", "confirmed", "completed", "cancelled", "not-interested", "to-follow-up", "cold-enq", "booking-confirmed"];
+
+  // Get pagination state
+  const { pageIndex, pageSize } = table.getState().pagination;
+  const totalRows = table.getFilteredRowModel().rows.length;
+  const currentPageRows = table.getRowModel().rows.length;
+  const pageCount = table.getPageCount();
+
+  // Calculate item range
+  const itemStart = pageIndex * pageSize + 1;
+  const itemEnd = itemStart + currentPageRows - 1;
 
   if (isLoading) {
     return <div className="p-4">Loading bookings...</div>;
@@ -221,23 +231,32 @@ export default function BookingsDataTable({ data: initialData }: DataTableProps)
   </TableBody>
 </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 p-4 border-t">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="flex items-center justify-between p-4 border-t">
+        <div className="text-sm text-muted-foreground">
+          {totalRows === 0 ? (
+            "No results."
+          ) : (
+            `Showing ${itemStart}–${itemEnd} of ${totalRows} booking(s). Page ${pageIndex + 1} of ${pageCount}.`
+          )}
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

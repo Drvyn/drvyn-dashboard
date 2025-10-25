@@ -106,7 +106,7 @@ export default function BookingsDataTable({ initialData }: DataTableProps) {
     }
   });
 
-  const bookingStatuses: BookingStatus[] = ["pending", "confirmed", "completed", "cancelled"];
+  const bookingStatuses: BookingStatus[] = ["pending", "confirmed", "completed", "cancelled", "not-interested", "to-follow-up", "cold-enq", "booking-confirmed"];
 
   if (isLoading) {
     return <div className="flex justify-center items-center h-64">Loading bookings...</div>;
