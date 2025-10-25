@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { dashboardApi, bookingsApi, insuranceRequestsApi, generalRequestsApi } from "@/lib/api";
 import { Booking, GeneralRequest, InsuranceRequest } from "@/lib/types";
-import { Calendar, AlertTriangle, ShieldCheck as ShieldCheckIcon } from "lucide-react";
-import BookingTrendChart from "@/components/dashboard/booking-trend-chart";
+import { Calendar, ShieldCheck as ShieldCheckIcon, MessageSquare } from "lucide-react";
 import RequestStatusChart from "@/components/dashboard/request-status-chart";
-import InsuranceTrendChart from "@/components/dashboard/insurance-trend-chart";
+import CombinedTrendChart from "@/app/dashboard/combined-trend-chart"; 
+
 
 interface DashboardStats {
   totalBookings: number;
@@ -104,13 +104,30 @@ export default function DashboardPage() {
     );
   }
 
+  // Calculate totals based on user's request
+  const totalAllRequests = stats.totalBookings + stats.totalInsuranceRequests + stats.totalCarRequests;
   const totalBookings = stats.totalBookings;
-  const pendingRequests = stats.pendingBookings + stats.pendingInsuranceRequests;
-  const completedInsurance = stats.totalInsuranceRequests - stats.pendingInsuranceRequests;
+  const totalInsurance = stats.totalInsuranceRequests;
+
 
   return (
     <div className="flex flex-col gap-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Card 1: Total All Requests */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total All Requests</CardTitle>
+            <div className="p-2 bg-yellow-500/10 rounded-md">
+              <MessageSquare className="h-4 w-4 text-yellow-500" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalAllRequests}</div>
+            <p className="text-xs text-muted-foreground">All-time bookings, insurance, and general requests</p>
+          </CardContent>
+        </Card>
+        
+        {/* Card 2: Total Bookings */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
@@ -123,41 +140,39 @@ export default function DashboardPage() {
             <p className="text-xs text-muted-foreground">All-time booking records</p>
           </CardContent>
         </Card>
+
+        {/* Card 3: Total Insurance Requests */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Actions</CardTitle>
-            <div className="p-2 bg-yellow-500/10 rounded-md">
-              <AlertTriangle className="h-4 w-4 text-yellow-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{pendingRequests}</div>
-            <p className="text-xs text-muted-foreground">Bookings and requests needing attention</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed Insurance</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Insurance</CardTitle>
             <div className="p-2 bg-green-500/10 rounded-md">
               <ShieldCheckIcon className="h-4 w-4 text-green-500" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{completedInsurance}</div>
-            <p className="text-xs text-muted-foreground">Successfully processed insurance requests</p>
+            <div className="text-2xl font-bold">{totalInsurance}</div>
+            <p className="text-xs text-muted-foreground">All-time insurance requests</p>
           </CardContent>
         </Card>
       </div>
 
       <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-7">
+        {/* --- MODIFIED SECTION --- */}
+        {/* Replaced BookingTrendChart with CombinedTrendChart */}
         <Card className="lg:col-span-4">
           <CardHeader>
-            <CardTitle>Booking Trends</CardTitle>
+            <CardTitle>Last 10 Days Trends</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
-            <BookingTrendChart data={bookings} />
+            <CombinedTrendChart 
+              bookings={bookings}
+              insuranceRequests={insuranceRequests}
+              generalRequests={generalRequests}
+            />
           </CardContent>
         </Card>
+        {/* --- END MODIFIED SECTION --- */}
+
         <Card className="lg:col-span-3">
           <CardHeader>
             <CardTitle>Request Status Overview</CardTitle>
@@ -171,16 +186,9 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-       <div className="grid gap-4 md:grid-cols-1">
-        <Card>
-          <CardHeader>
-            <CardTitle>Insurance Request Trends</CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <InsuranceTrendChart data={insuranceRequests} />
-          </CardContent>
-        </Card>
-      </div>
+      
+       {/* --- REMOVED SECTION --- */}
+       {/* Removed the old InsuranceTrendChart card from here */}
     </div>
   );
 }
