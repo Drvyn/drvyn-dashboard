@@ -79,7 +79,7 @@ export const insuranceRequestColumns: ColumnDef<InsuranceRequest>[] = [
         >
           <SelectTrigger
             className={cn(
-              "w-36 h-9 transition-all duration-200 border-2 font-medium rounded-lg py-1.5 px-3",
+              "w-44 h-9 transition-all duration-200 border-2 font-medium rounded-lg py-1.5 px-3",
               "focus:ring-2 focus:ring-offset-2 focus:ring-[hsl(var(--status-" + initialValue + "))/40]",
               "hover:shadow-sm active:scale-95",
               statusStyles[initialValue]
@@ -115,4 +115,4 @@ export const insuranceRequestColumns: ColumnDef<InsuranceRequest>[] = [
       );
     }
   },
-] 
+]
